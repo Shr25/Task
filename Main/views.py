@@ -52,7 +52,7 @@ class ToDoList(LoginRequiredMixin, ListView):
     
     search_input = self.request.GET.get('search-area') or ''
     if search_input:
-      context['todo'] = context['todo'].filter(title__startswith=search_input)
+      context['todo'] = context['todo'].filter(title__contains=search_input)
     context['search_input'] = search_input
     return context
 
@@ -81,6 +81,9 @@ class DeleteView(LoginRequiredMixin,DeleteView):
   context_object_name = 'todos'
   success_url = reverse_lazy('todo')
   template_name = 'Main\delete.html'
+  def get_queryset(self):
+    owner = self.request.user
+    return self.model.objects.filter(user=owner)
   
 class TodoReorder(View):
     def post(self, request):
