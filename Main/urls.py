@@ -9,8 +9,7 @@ urlpatterns = [
   path('', ToDoList.as_view(), name='todo'),  #tasks
   path('todos/<int:pk>/', ToDoDetail.as_view(), name='todos'), #task
   path('todo_create/', ToDoCreate.as_view(), name='todo_create'),
-  path('todo_update/<int:pk>/', ToDoUpdate.as_view(), 
-  name='todo_update'),
+  path('todo_update/<int:pk>/', ToDoUpdate.as_view(), name='todo_update'),
   path('todo_delete/<int:pk>/', DeleteView.as_view(), name='todo_delete'),
   path('todo_reorder/', TodoReorder.as_view(), name='todo_reorder'),
 
