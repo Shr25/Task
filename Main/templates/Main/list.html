@@ -1,6 +1,6 @@
 {% extends 'Main/base.html'%}
 {% block content %}
-
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <div class="header-bar">
   <div>
     <h1>Hello {{request.user|title}}</h1>
@@ -20,7 +20,9 @@
       <input type="text" name="search-area" value="{{search_input}}">
       <input class="btn" type="submit" value="Search">
     </form> 
+    {% if todo|length > 0 %}
     <a id="add-link" href="{% url 'todo_create' %}">&#x2b;</a>
+    {% endif %}
 </div>
 
 <!-- Hidden form. Form submits new item positions -->
@@ -31,7 +33,7 @@
   
   <div id='todolist' class="todo-items-wrapper">
     {% for todos in todo %}
-    <div class="todo-wrapper">
+    <div class="todo-wrapper" data-position="{{todos.pk}}">
       <div class="todo-title">
         {% if todos.complete %}
         <div class="todo-complete-icon"></div>
@@ -41,39 +43,42 @@
           <div class="todo-incomplete-icon"></div>
           <a href="{% url 'todo_update' todos.id %}">{{todos}}</a> 
           {% endif %}
-      </div>
+        </div>
       <div class="todo-controls">
         <a class="delete-link" href="{% url 'todo_delete' todos.id %}">&#215;</a>
         <span class="handle">&nbsp;&#10247;</span>
       </div>
     </div>
     {% empty %}
-    <h3>No items present in list</h3>
+    <div>
+      <h3>No items present in list</h3>
+      <h3>Create a <a style="text-decoration: none; color: #e53935;" href="{% url 'todo_create' %}">New task</a> ! </h3>
+    </div>
     {% endfor %}
-    {% endblock content %}
   </div>
   <script>
     var taskList = document.getElementById("todolist");
     var reorderForm = document.getElementById("reorderForm");
     var positionInput = document.getElementById("positionInput");
-
-    let sortable = Sortable.create(taskList, {
-        handle: '.handle',
-        ghostClass: 'dropArea',
-        chosenClass: 'selectedTask',
-
+    
+    var sortable = Sortable.create(taskList, {
+      handle: '.handle',
+      ghostClass: 'dropArea',
+      chosenClass: 'selectedTask',
+      
     });
-
+    
     function reordering() {
-        const rows = document.getElementsByClassName("todo-wrapper");
-        let pos = [];
-        for (let row of rows) {
-            pos.push(row.dataset.position);
-        }
-        console.log(pos.join(","))
-        positionInput.value = pos.join(',');
-        reorderForm.submit();
+      const rows = document.getElementsByClassName("todo-wrapper");
+      let pos = [];
+      for (let row of rows) {
+        pos.push(row.dataset.position);
+      }
+      console.log(pos.join(","))
+      positionInput.value = pos.join(',');
+      reorderForm.submit();
     }
-
+    
     document.ondrop = reordering
-  </script>
+    </script>
+  {% endblock content %}
