@@ -37,7 +37,7 @@
       <div class="todo-title">
         {% if todos.complete %}
         <div class="todo-complete-icon"></div>
-          <i><s><a href="{% url 'todo_update' todos.id %}">{{todos}}</a><s>
+          <i><s><a href="{% url 'todo_update' todos.id %}">{{todos}}</a></s>
           </i> 
           {% else %}
           <div class="todo-incomplete-icon"></div>
@@ -50,7 +50,7 @@
       </div>
     </div>
     {% empty %}
-    <div>
+    <div style="text-align: center;">
       <h3>No items present in list</h3>
       <h3>Create a <a style="text-decoration: none; color: #e53935;" href="{% url 'todo_create' %}">New task</a> ! </h3>
     </div>
