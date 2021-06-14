@@ -10,8 +10,8 @@ To-Do list app with User Registration, Login, Search and full Create, Read, Upda
 
 
 
-![image info](/screenshot/register.png)
-![image info](/screenshot/login.png)
-![image info](/screenshot/taskList.png)
-![image info](/screenshot/addTask.png)
-![image info](/screenshot/searching.png)
+![image info](./screenshot/register.png)
+![image info](./screenshot/login.png)
+![image info](./screenshot/taskList.png)
+![image info](./screenshot/addTask.png)
+![image info](./screenshot/searching.png)
